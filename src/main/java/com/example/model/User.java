@@ -1,6 +1,7 @@
 package com.example.model;
 
 import io.quarkus.hibernate.reactive.panache.PanacheEntity;
+import io.vertx.mutiny.sqlclient.Row;
 
 import javax.persistence.*;
 
@@ -16,6 +17,15 @@ public class User {
     private String name;
 
     public User() {
+    }
+
+    public User(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public static User from(Row row) {
+        return new User(row.getLong("id"), row.getString("name"));
     }
 
     public String getName() {
